@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\Rotation.cs" />
-    <None Include="Assets\Shaders\Stencil.shader" />
     <None Include="Assets\Shaders\Vertex.shader" />
     <None Include="Assets\Shaders\CullOff.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
