@@ -107,15 +107,15 @@ public class ActionList : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPo
         action.transform.parent = canvasTransform;
     }
 
-    public List<MoveAction> GetMoveActions()
+    public List<Directions> GetMoveDirections()
     {
-        List<MoveAction> moveActions = new List<MoveAction>();
+        List<Directions> moveActions = new List<Directions>();
 
         for (int i = 0; i < actionList.Count; i++)
         {
             if(actionList[i].GetComponent<MoveAction>())
             {
-                moveActions.Add(actionList[i].GetComponent<MoveAction>());
+                moveActions.Add(actionList[i].GetComponent<MoveAction>().GetDirection());
             }
 
             else if(actionList[i].GetComponent<RepeatAction>())
@@ -124,7 +124,7 @@ public class ActionList : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPo
 
                 for (int j = 0; j < repeatAction.GetMoveActions().Count; j++)
                 {
-                    moveActions.Add(repeatAction.GetMoveActions()[j]);
+                    moveActions.Add(repeatAction.GetMoveActions()[j].GetDirection());
                 }
             }
         }
