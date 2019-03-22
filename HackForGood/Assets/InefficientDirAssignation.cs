@@ -14,6 +14,7 @@ public class InefficientDirAssignation : MonoBehaviour
 
         foreach (Node node in nodes)
         {
+            node.gameObject.name = "Node " + (int)node.transform.position.x + "-" + (int)node.transform.position.z;
             foreach (Node n in nodes)
             {
                 if (node != n)

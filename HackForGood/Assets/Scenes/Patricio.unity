@@ -121,7 +121,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100006, guid: c780034c5da6c4549a693b58287ed201, type: 3}
       propertyPath: m_Name
-      value: recta (4)
+      value: Node 173-300
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: c780034c5da6c4549a693b58287ed201, type: 3}
       propertyPath: m_LocalPosition.x
@@ -178,7 +178,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100006, guid: c780034c5da6c4549a693b58287ed201, type: 3}
       propertyPath: m_Name
-      value: recta (1)
+      value: Node 170-295
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: c780034c5da6c4549a693b58287ed201, type: 3}
       propertyPath: m_LocalPosition.x
@@ -292,7 +292,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100006, guid: 5d2a01d54f9c3b54ea6b06df00a145a2, type: 3}
       propertyPath: m_Name
-      value: recta 1 (2)
+      value: Node 175-300
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 5d2a01d54f9c3b54ea6b06df00a145a2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -511,7 +511,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100006, guid: c780034c5da6c4549a693b58287ed201, type: 3}
       propertyPath: m_Name
-      value: recta (3)
+      value: Node 170-300
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: c780034c5da6c4549a693b58287ed201, type: 3}
       propertyPath: m_LocalPosition.x
@@ -568,7 +568,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100006, guid: 5d2a01d54f9c3b54ea6b06df00a145a2, type: 3}
       propertyPath: m_Name
-      value: recta 1
+      value: Node 168-295
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 5d2a01d54f9c3b54ea6b06df00a145a2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -625,7 +625,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100006, guid: 5d2a01d54f9c3b54ea6b06df00a145a2, type: 3}
       propertyPath: m_Name
-      value: recta 1 (1)
+      value: Node 168-300
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 5d2a01d54f9c3b54ea6b06df00a145a2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -712,7 +712,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100006, guid: c780034c5da6c4549a693b58287ed201, type: 3}
       propertyPath: m_Name
-      value: recta (5)
+      value: Node 175-298
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: c780034c5da6c4549a693b58287ed201, type: 3}
       propertyPath: m_LocalPosition.x
@@ -794,7 +794,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100006, guid: 5d2a01d54f9c3b54ea6b06df00a145a2, type: 3}
       propertyPath: m_Name
-      value: recta 1 (3)
+      value: Node 175-295
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 5d2a01d54f9c3b54ea6b06df00a145a2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -882,7 +882,7 @@ PrefabInstance:
     - target: {fileID: 928379093565122164, guid: ee528d22d77313d4e93215619509aac6,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 928379093565122166, guid: ee528d22d77313d4e93215619509aac6,
         type: 3}
@@ -971,7 +971,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100006, guid: c780034c5da6c4549a693b58287ed201, type: 3}
       propertyPath: m_Name
-      value: recta (2)
+      value: Node 168-298
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: c780034c5da6c4549a693b58287ed201, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1053,7 +1053,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100006, guid: c780034c5da6c4549a693b58287ed201, type: 3}
       propertyPath: m_Name
-      value: recta
+      value: Node 173-295
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: c780034c5da6c4549a693b58287ed201, type: 3}
       propertyPath: m_LocalPosition.x

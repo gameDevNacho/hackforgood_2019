@@ -61,8 +61,7 @@ public class Truck : MonoBehaviour
         transform.LookAt(nextNode.transform);
         destination = destination.GetNodeAtDirection(nextDirection);
 
-        ////prueba
-        //nextDirection = Directions.Right;
+        //action getfromlist
     }
 
     private void PickUpGarbage()
