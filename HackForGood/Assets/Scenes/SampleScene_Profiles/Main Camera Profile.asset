@@ -88,13 +88,13 @@ MonoBehaviour:
     value: 5.5
   aperture:
     overrideState: 1
-    value: 16.55
+    value: 15
   focalLength:
     overrideState: 1
-    value: 300
+    value: 215
   kernelSize:
     overrideState: 1
-    value: 3
+    value: 1
 --- !u!114 &114336874958120586
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1465,7 +1465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b77c5407dc277943b591ade9e6b18c5, type: 3}
   m_Name: LensDistortion
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
