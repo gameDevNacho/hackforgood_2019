@@ -106,4 +106,29 @@ public class ActionList : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPo
         actionList.Remove(action);
         action.transform.parent = canvasTransform;
     }
+
+    public List<MoveAction> GetMoveActions()
+    {
+        List<MoveAction> moveActions = new List<MoveAction>();
+
+        for (int i = 0; i < actionList.Count; i++)
+        {
+            if(actionList[i].GetComponent<MoveAction>())
+            {
+                moveActions.Add(actionList[i].GetComponent<MoveAction>());
+            }
+
+            else if(actionList[i].GetComponent<RepeatAction>())
+            {
+                RepeatAction repeatAction = actionList[i].GetComponent<RepeatAction>();
+
+                for (int j = 0; j < repeatAction.GetMoveActions().Count; j++)
+                {
+                    moveActions.Add(repeatAction.GetMoveActions()[j]);
+                }
+            }
+        }
+
+        return moveActions;
+    }
 }
