@@ -483,6 +483,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bush (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.23
@@ -1071,6 +1075,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bush (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.83
@@ -1525,6 +1533,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bush (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.14
@@ -1839,6 +1851,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bush (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.27
@@ -2069,6 +2085,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_Name
       value: Bush (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3589,6 +3609,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bush (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.71
@@ -3974,6 +3998,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bush (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.82
@@ -4283,6 +4311,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_Name
       value: Bush (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5223,6 +5255,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bush (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.9079999
@@ -5519,6 +5555,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bush (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.51
@@ -5605,6 +5645,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_Name
       value: Bush (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5831,6 +5875,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bush (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.73
@@ -5917,6 +5965,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_Name
       value: Bush (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6217,6 +6269,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_Name
       value: Bush (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f561e9fb79be6274587390715b09bd68, type: 3}
       propertyPath: m_LocalPosition.x
