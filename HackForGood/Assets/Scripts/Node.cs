@@ -83,4 +83,25 @@ public class Node : MonoBehaviour
 
         return new Bezier(a, b, c, d);
     }
+
+    public void SetNodeAt(Node node, Directions dir)
+    {
+        switch (dir)
+        {
+            case Directions.Up:
+                up = node;
+                break;
+            case Directions.Down:
+                down = node;
+                break;
+            case Directions.Left:
+                left = node;
+                break;
+            case Directions.Right:
+                right = node;
+                break;
+            default:
+                break;
+        }
+    }
 }
