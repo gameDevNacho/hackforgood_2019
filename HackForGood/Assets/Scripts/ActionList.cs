@@ -6,21 +6,26 @@ using UnityEngine.EventSystems;
 
 public class ActionList : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPointerExitHandler
 {
+    [SerializeField]
     private List<Action> actionList;
 
     private bool arranging;
 
     private GameObject emptyGameObject;
 
+    [SerializeField]
+    private Transform canvasTransform;
+
     private void Awake()
     {
         actionList = new List<Action>();
         arranging = false;
+        emptyGameObject = null;
     }
 
     private void Update()
     {
-        if(arranging)
+        if(arranging && transform.childCount > 0)
         {
             if(transform.GetChild(0).transform.position.y < Input.mousePosition.y)
             {
@@ -38,13 +43,16 @@ public class ActionList : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPo
                 }
             }
 
-            for (int i = 0; i < transform.childCount; i++)
+            else
             {
-                if(emptyGameObject && i + 1 < actionList.Count)
+                for (int i = 0; i < transform.childCount; i++)
                 {
-                    if(transform.GetChild(i).transform.position.y >= Input.mousePosition.y && transform.GetChild(i + 1).transform.position.y < Input.mousePosition.y)
+                    if (emptyGameObject && i + 1 < actionList.Count)
                     {
-                        emptyGameObject.transform.SetSiblingIndex(i + 1);
+                        if (transform.GetChild(i).transform.position.y >= Input.mousePosition.y && transform.GetChild(i + 1).transform.position.y < Input.mousePosition.y)
+                        {
+                            emptyGameObject.transform.SetSiblingIndex(i + 1);
+                        }
                     }
                 }
             }
@@ -53,10 +61,11 @@ public class ActionList : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPo
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(eventData.dragging)
+        if(eventData.dragging && eventData.pointerDrag.GetComponent<Action>() && !emptyGameObject)
         {
             arranging = true;
-            emptyGameObject = Instantiate(new GameObject(), transform);
+            emptyGameObject = new GameObject();
+            emptyGameObject.transform.parent = transform;
             emptyGameObject.AddComponent<Image>();
             emptyGameObject.GetComponent<Image>().color = new Color(emptyGameObject.GetComponent<Image>().color.r, emptyGameObject.GetComponent<Image>().color.b, emptyGameObject.GetComponent<Image>().color.g, 0);
         }
@@ -73,6 +82,8 @@ public class ActionList : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPo
                 eventData.pointerDrag.transform.SetSiblingIndex(emptyGameObject.transform.GetSiblingIndex());
                 Destroy(emptyGameObject);
                 actionList.Insert(eventData.pointerDrag.transform.GetSiblingIndex(), eventData.pointerDrag.GetComponent<Action>());
+                eventData.pointerDrag.GetComponent<Action>().assigned = true;
+                eventData.pointerDrag.GetComponent<Action>().actionList = this;
             }
         }
     }
@@ -82,7 +93,17 @@ public class ActionList : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPo
         if(eventData.dragging)
         {
             arranging = false;
+        }
+
+        if(emptyGameObject)
+        {
             Destroy(emptyGameObject);
         }
+    }
+
+    public void RemoveFromList(Action action)
+    {
+        actionList.Remove(action);
+        action.transform.parent = canvasTransform;
     }
 }
