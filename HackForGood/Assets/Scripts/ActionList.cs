@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ActionList : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPointerExitHandler
+public class ActionList : Singleton<ActionList>, IPointerEnterHandler, IDropHandler, IPointerExitHandler
 {
     [SerializeField]
-    private List<Action> actionList;
+    public List<Action> actionList;
 
     private bool arranging;
 
