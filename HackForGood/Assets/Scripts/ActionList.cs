@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ActionList : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPointerExitHandler
+public class ActionList : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPointerExitHandler, IPointerUpHandler
 {
     [SerializeField]
     private List<Action> actionList;
@@ -64,10 +64,16 @@ public class ActionList : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPo
         if(eventData.dragging && eventData.pointerDrag.GetComponent<Action>() && !emptyGameObject)
         {
             arranging = true;
-            emptyGameObject = new GameObject();
+            emptyGameObject = new GameObject("Empty", typeof(RectTransform));
             emptyGameObject.transform.parent = transform;
+            emptyGameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(40, 40);
             emptyGameObject.AddComponent<Image>();
             emptyGameObject.GetComponent<Image>().color = new Color(emptyGameObject.GetComponent<Image>().color.r, emptyGameObject.GetComponent<Image>().color.b, emptyGameObject.GetComponent<Image>().color.g, 0);
+        }
+
+        else if(!eventData.dragging)
+        {
+            arranging = false;
         }
     }
 
@@ -122,13 +128,24 @@ public class ActionList : MonoBehaviour, IPointerEnterHandler, IDropHandler, IPo
             {
                 RepeatAction repeatAction = actionList[i].GetComponent<RepeatAction>();
 
-                for (int j = 0; j < repeatAction.GetMoveActions().Count; j++)
+                for (int k = 0; k < repeatAction.TimesRepeating; k++)
                 {
-                    moveActions.Add(repeatAction.GetMoveActions()[j].GetDirection());
+                    for (int j = 0; j < repeatAction.GetMoveActions().Count; j++)
+                    {
+                        moveActions.Add(repeatAction.GetMoveActions()[j].GetDirection());
+                    }
                 }
             }
         }
 
         return moveActions;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (emptyGameObject)
+        {
+            Destroy(emptyGameObject);
+        }
     }
 }
