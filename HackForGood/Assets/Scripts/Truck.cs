@@ -9,19 +9,31 @@ public class Truck : MonoBehaviour
     [SerializeField]
     GarbageType truckType;
 
-    [SerializeField]
+    public Node startNode;
     Node destination;
 
     Directions currentDirection;
     Directions nextDirection;
+
+    List<Directions> directions;
+    int dirIndex = 0;
+
+    bool outOfTrack = false;
+    float rotationSpeed = 1000;
+    float maxTimeRotating = 1.5f;
+    float timeRotating = 0;
+    Vector3 outOfTrackDir;
+
+    Transform initialTransform;
 
     private static readonly float arrivedThreshold = 0.1f;
 
     // Start is called before the first frame update
     void Start()
     {
-        SetInitialDirection();
-        destination = GetClosestNode();
+        //SetInitialDirection();
+        startNode = GetClosestNode();
+        initialTransform = this.transform;
     }
 
     // Update is called once per frame
@@ -31,13 +43,25 @@ public class Truck : MonoBehaviour
         {
             Move();
         }
+        if(outOfTrack)
+        {
+            RotateOutOfControl();
+            timeRotating += Time.deltaTime;
+            if(timeRotating > maxTimeRotating)
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
 
     private void LateUpdate()
     {
-        if(HasArrivedDestination())
+        if(destination)
         {
-            OnArrivedToDestination();
+            if (HasArrivedDestination())
+            {
+                OnArrivedToDestination();
+            }
         }
     }
 
@@ -46,6 +70,7 @@ public class Truck : MonoBehaviour
         Vector3 direction = destination.transform.position - transform.position;
         direction.Normalize();
         transform.position += direction * speed * Time.deltaTime;
+        this.transform.LookAt(destination.transform);
     }
 
     private bool HasArrivedDestination()
@@ -55,11 +80,31 @@ public class Truck : MonoBehaviour
 
     private void OnArrivedToDestination()
     {
-        PickUpGarbage();
-        Node nextNode = destination.GetNodeAtDirection(nextDirection);
-        transform.position = destination.transform.position;
-        transform.LookAt(nextNode.transform);
-        destination = destination.GetNodeAtDirection(nextDirection);
+        if(dirIndex < directions.Count)
+        {
+            nextDirection = directions[dirIndex];
+            dirIndex++;
+
+            PickUpGarbage();
+            Node nextNode = destination.GetNodeAtDirection(nextDirection);
+            if(nextNode)
+            {
+                transform.position = destination.transform.position;
+                transform.LookAt(nextNode.transform);
+                destination = destination.GetNodeAtDirection(nextDirection);
+            }
+            else
+            {
+                outOfTrack = true;
+                destination = null;
+                outOfTrackDir = transform.forward;
+            }
+        }
+        else
+        {
+            destination = null;
+            dirIndex = 0;
+        }
 
         //action getfromlist
     }
@@ -130,5 +175,24 @@ public class Truck : MonoBehaviour
 
         currentDirection = dir;
         nextDirection = dir;
+    }
+
+    public void SetDirections(List<Directions> dirs)
+    {
+        directions = dirs;
+        destination = startNode.GetNodeAtDirection(directions[dirIndex]);
+        dirIndex++;
+    }
+
+    public void RotateOutOfControl()
+    {
+        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+        transform.position += outOfTrackDir * Time.deltaTime * speed;
+    }
+
+    public void ResetTransform()
+    {
+        transform.position = initialTransform.position;
+        transform.rotation = initialTransform.rotation;
     }
 }

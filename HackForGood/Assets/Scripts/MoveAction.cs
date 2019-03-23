@@ -38,11 +38,7 @@ public class MoveAction : Action
 
     public override void OnDrag(PointerEventData eventData)
     {
-        #if UNITY_STANDALONE_WIN
-                transform.position = Input.mousePosition;
-        #elif UNITY_ANDROID
-                    transform.position = Input.GetTouch(0).position;
-        #endif
+        transform.position = Input.mousePosition;
 
         GetComponent<RectTransform>().sizeDelta = new Vector2(initialWidth, initialHeight);
     }

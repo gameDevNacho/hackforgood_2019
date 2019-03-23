@@ -12,9 +12,4 @@ public class SliderHelper : MonoBehaviour
     {
         scrollRect.verticalNormalizedPosition = 1 - value;
     }
-
-    public void SetSliderValue(Vector2 values)
-    {
-        GetComponent<Slider>().value = 1 - scrollRect.verticalNormalizedPosition;
-    }
 }

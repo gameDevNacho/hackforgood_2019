@@ -17,7 +17,7 @@ public class RepeatActionList : MonoBehaviour, IPointerEnterHandler, IDropHandle
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(eventData.dragging && eventData.pointerDrag.GetComponent<MoveAction>() && !emptyGameObject && repeatAction.GetMoveActions().Count < repeatAction.maxMoveActions)
+        if(eventData.dragging && eventData.pointerDrag.GetComponent<Action>() && !emptyGameObject)
         {
             arranging = true;
             emptyGameObject = new GameObject();
@@ -42,27 +42,17 @@ public class RepeatActionList : MonoBehaviour, IPointerEnterHandler, IDropHandle
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (eventData.pointerDrag.GetComponent<MoveAction>())
+        if (eventData.pointerDrag.GetComponent<Action>())
         {
             eventData.pointerDrag.transform.SetParent(transform);
 
             if (emptyGameObject)
             {
-
-                if (repeatAction.GetMoveActions().Count < repeatAction.maxMoveActions)
-                {
-                    eventData.pointerDrag.transform.SetSiblingIndex(emptyGameObject.transform.GetSiblingIndex());
-                    repeatAction.GetMoveActions().Insert(eventData.pointerDrag.transform.GetSiblingIndex(), eventData.pointerDrag.GetComponent<MoveAction>());
-                    eventData.pointerDrag.GetComponent<MoveAction>().assigned = true;
-                    eventData.pointerDrag.GetComponent<MoveAction>().repeatActionList = this;
-                }
-
-                else
-                {
-                    repeatAction.Error();
-                }
-
+                eventData.pointerDrag.transform.SetSiblingIndex(emptyGameObject.transform.GetSiblingIndex());
                 Destroy(emptyGameObject);
+                repeatAction.GetMoveActions().Insert(eventData.pointerDrag.transform.GetSiblingIndex(), eventData.pointerDrag.GetComponent<MoveAction>());
+                eventData.pointerDrag.GetComponent<Action>().assigned = true;
+                eventData.pointerDrag.GetComponent<Action>().repeatActionList = this;
             }
         }
     }

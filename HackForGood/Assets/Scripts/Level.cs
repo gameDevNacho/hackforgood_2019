@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
-    [SerializeField]
     private List<Node> nodes;
+    List<Truck> trucks;
 
     private int yellowGarbage;
     private int blueGarbage;
@@ -15,6 +15,9 @@ public class Level : MonoBehaviour
 
     public void Initialize()
     {
+        nodes = new List<Node>(FindObjectsOfType<Node>());
+        trucks = new List<Truck>(FindObjectsOfType<Truck>());
+
         for (int i = 0; i < nodes.Count; i++)
         {
             nodes[i].InitializeNode(this);
@@ -46,5 +49,11 @@ public class Level : MonoBehaviour
                 grayGarbage++;
                 break;
         }
+    }
+
+    public void OnVamonosAtomos()
+    {
+        trucks[0].SetDirections(ActionList.Instance.GetMoveDirections());
+        trucks[0].ResetTransform();
     }
 }

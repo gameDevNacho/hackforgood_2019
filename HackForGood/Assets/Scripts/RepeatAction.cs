@@ -8,23 +8,10 @@ public class RepeatAction : Action
 {
     [SerializeField]
     private List<MoveAction> moveActions;
-    [SerializeField]
-    private Text repeatingText;
-    [SerializeField]
-    private Image icon;
 
     private Image image;
 
-    public int maxMoveActions;
-
     private int index;
-
-    public int TimesRepeating
-    {
-        get;
-
-        set;
-    }
 
     private void Awake()
     {
@@ -32,8 +19,6 @@ public class RepeatAction : Action
         image = GetComponent<Image>();
         assigned = false;
         moveActions = new List<MoveAction>();
-        TimesRepeating = 1;
-        maxMoveActions = 2;
     }
 
     public override void OnBeginDrag(PointerEventData eventData)
@@ -70,11 +55,7 @@ public class RepeatAction : Action
 
     public override void OnDrag(PointerEventData eventData)
     {
-        #if UNITY_STANDALONE_WIN
-            transform.position = Input.mousePosition;
-        #elif UNITY_ANDROID
-            transform.position = Input.GetTouch(0).position;
-        #endif
+        transform.position = Input.mousePosition;
     }
 
     public override void OnEndDrag(PointerEventData eventData)
@@ -86,6 +67,13 @@ public class RepeatAction : Action
         for (int i = 0; i < images.Length; i++)
         {
             images[i].raycastTarget = true;
+        }
+
+        Text[] texts = GetComponentsInChildren<Text>();
+
+        for (int i = 0; i < texts.Length; i++)
+        {
+            texts[i].raycastTarget = true;
         }
 
         Button[] buttons = GetComponentsInChildren<Button>();
@@ -115,38 +103,5 @@ public class RepeatAction : Action
     {
         moveActions.Remove(action);
         action.transform.SetParent(GameObject.Find("Canvas").transform);
-    }
-
-    public void AddRepetition(bool add)
-    {
-        if(add)
-        {
-            TimesRepeating++;
-        }
-
-        else
-        {
-            if(TimesRepeating - 1 >= 1)
-            {
-                TimesRepeating--;
-            }
-        }
-
-        repeatingText.text = TimesRepeating.ToString();
-    }
-
-    public void Error()
-    {
-        StopCoroutine(ErrorColor());
-        StartCoroutine(ErrorColor());
-    }
-
-    private IEnumerator ErrorColor()
-    {
-        Color color = icon.color;
-        icon.color = new Color(1, 0, 0, 1);
-        yield return new WaitForSeconds(0.5f);
-        icon.color = color;
-
     }
 }
