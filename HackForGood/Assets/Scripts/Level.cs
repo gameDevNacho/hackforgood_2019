@@ -65,6 +65,7 @@ public class Level : Singleton<Level>
   {
     if (currentTruckIndex < trucks.Count)
     {
+<<<<<<< HEAD
       trucks[currentTruckIndex].ResetTransform();
       trucks[currentTruckIndex].SetDirections(ActionList.Instance.GetMoveDirections());
       Riding = true;
@@ -90,6 +91,14 @@ public class Level : Singleton<Level>
       }
 
       GameObject.Find("ScrollView").GetComponent<ScrollRect>().verticalNormalizedPosition = 0.5f;
+=======
+        if(trucks[0].directions.Count == 0)
+        {
+            trucks[0].SetDirections(ActionList.Instance.GetMoveDirections());
+        }
+        
+        trucks[0].ResetTransform();
+>>>>>>> d187d33b5162bfacf0878b496f7c3aabf2e14293
     }
   }
 }

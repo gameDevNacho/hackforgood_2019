@@ -15,8 +15,14 @@ public class Truck : MonoBehaviour
   Directions currentDirection;
   Directions nextDirection;
 
+<<<<<<< HEAD
   List<Directions> directions;
   int dirIndex = 0;
+=======
+    [HideInInspector]
+    public List<Directions> directions;
+    int dirIndex = 0;
+>>>>>>> d187d33b5162bfacf0878b496f7c3aabf2e14293
 
   bool outOfTrack = false;
   float rotationSpeed = 1000;
@@ -24,6 +30,11 @@ public class Truck : MonoBehaviour
   float timeRotating = 0;
   Vector3 outOfTrackDir;
 
+<<<<<<< HEAD
+=======
+    Vector3 initialPos;
+    Quaternion initialRot;
+>>>>>>> d187d33b5162bfacf0878b496f7c3aabf2e14293
 
   bool GarbagePickedUp = false;
 
@@ -44,7 +55,14 @@ public class Truck : MonoBehaviour
   {
     if (destination)
     {
+<<<<<<< HEAD
       Move();
+=======
+        //SetInitialDirection();
+        startNode = GetClosestNode();
+        initialPos = this.transform.position;
+        initialRot = transform.rotation;
+>>>>>>> d187d33b5162bfacf0878b496f7c3aabf2e14293
     }
     if (outOfTrack)
     {
@@ -148,10 +166,18 @@ public class Truck : MonoBehaviour
         }
         else
         {
+<<<<<<< HEAD
           SpriteInstancer.Instance.InstantiateAt(transform.position, false);
           ResetTransform();
         }       
       }
+=======
+            destination = null;
+            //dirIndex = 0;
+        }
+
+        //action getfromlist
+>>>>>>> d187d33b5162bfacf0878b496f7c3aabf2e14293
     }
   }
 
@@ -221,7 +247,12 @@ public class Truck : MonoBehaviour
     destination = startNode.GetNodeAtDirection(directions[dirIndex]);
     if (destination == null)
     {
+<<<<<<< HEAD
       Crash();
+=======
+        this.transform.position = initialPos;
+        this.transform.rotation = initialRot;
+>>>>>>> d187d33b5162bfacf0878b496f7c3aabf2e14293
     }
 
     dirIndex++;
