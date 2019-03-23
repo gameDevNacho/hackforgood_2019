@@ -6,6 +6,10 @@ public enum Directions { Up = 0, Down, Left, Right }
 
 public class Node : MonoBehaviour
 {
+    public bool isFactory = false;
+
+    public GarbageType type;
+
     [SerializeField]
     private Node up;
     [SerializeField]
@@ -21,8 +25,6 @@ public class Node : MonoBehaviour
     [SerializeField]
     private Transform nodeCenter;
 
-    private Garbage garbage;
-    
     private Level level;
 
     public static float curveAperture = 2f;
@@ -34,10 +36,9 @@ public class Node : MonoBehaviour
         if(garbagePrefab)
         {
             //garbage = Instantiate(garbagePrefab, nodeCenter.position, garbagePrefab.transform.rotation, transform);
-            hasGarbage = true;
-            garbage = Instantiate(garbagePrefab);
-            garbage.transform.position = transform.position;
-            level.AddGarbage(garbage.garbageType);
+            hasGarbage = true;           
+            garbagePrefab.transform.position = transform.position;
+            level.AddGarbage(garbagePrefab.garbageType);
         }
     }
 
@@ -65,13 +66,13 @@ public class Node : MonoBehaviour
 
     public Garbage GetGarbage()
     {
-        return garbage;
+        return garbagePrefab;
     }
 
     public void RemoveGarbage()
     {
-        Destroy(garbage.gameObject);
-        hasGarbage = false;
+        //Destroy(garbagePrefab.gameObject);
+        //hasGarbage = false;
     }
 
     public Bezier BuildBezier(Directions from, Directions to)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpriteInstancer : MonoBehaviour
 {
-  public Sprite good, bad;
+  public Sprite good, bad, star;
 
   public static SpriteInstancer Instance
   {
@@ -32,18 +32,23 @@ public class SpriteInstancer : MonoBehaviour
     InstantiateAt(transform.position, false);
   }
 
-  public void Update()
-  {
-   
-  }
-
-  public void InstantiateAt(Vector3 position, bool good)
+  public void InstantiateAt(Vector3 position, bool good, bool star = false)
   {
     GameObject sprite = new GameObject();
     sprite.transform.position = position;
     SpriteRenderer renderer = sprite.AddComponent<SpriteRenderer>();
-    renderer.sprite = (good) ? this.good : bad;
+
+    if (!star)
+    {
+      renderer.sprite = (good) ? this.good : bad;
+    }
+    else
+    {
+      renderer.sprite = this.star;
+    }
+      
     sprite.AddComponent<SpriteFunctionality>();
+   // transform.localScale = new Vector3(-1, 1, 1);
   }
 
 }

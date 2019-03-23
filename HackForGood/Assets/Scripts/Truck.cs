@@ -4,195 +4,252 @@ using UnityEngine;
 
 public class Truck : MonoBehaviour
 {
-    [SerializeField]
-    float speed = 5;
-    [SerializeField]
-    GarbageType truckType;
+  [SerializeField]
+  float speed = 5;
+  [SerializeField]
+  GarbageType truckType;
 
-    public Node startNode;
-    Node destination;
+  public Node startNode;
+  Node destination;
 
-    Directions currentDirection;
-    Directions nextDirection;
+  Directions currentDirection;
+  Directions nextDirection;
 
-    List<Directions> directions;
-    int dirIndex = 0;
+  List<Directions> directions;
+  int dirIndex = 0;
 
-    bool outOfTrack = false;
-    float rotationSpeed = 1000;
-    float maxTimeRotating = 1.5f;
-    float timeRotating = 0;
-    Vector3 outOfTrackDir;
+  bool outOfTrack = false;
+  float rotationSpeed = 1000;
+  float maxTimeRotating = 1.5f;
+  float timeRotating = 0;
+  Vector3 outOfTrackDir;
 
-    Transform initialTransform;
 
-    private static readonly float arrivedThreshold = 0.1f;
+  bool GarbagePickedUp = false;
 
-    // Start is called before the first frame update
-    void Start()
+  Transform initialTransform;
+
+  private static readonly float arrivedThreshold = 0.1f;
+
+  // Start is called before the first frame update
+  void Start()
+  {
+    //SetInitialDirection();
+    startNode = GetClosestNode();
+    initialTransform = this.transform;
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+    if (destination)
     {
-        //SetInitialDirection();
-        startNode = GetClosestNode();
-        initialTransform = this.transform;
+      Move();
+    }
+    if (outOfTrack)
+    {
+      RotateOutOfControl();
+      timeRotating += Time.deltaTime;
+      if (timeRotating > maxTimeRotating)
+      {
+        //Destroy(this.gameObject);
+        ResetTransform();
+
+      }
+    }
+  }
+
+  private void LateUpdate()
+  {
+    if (destination)
+    {
+      if (HasArrivedDestination())
+      {
+        OnArrivedToDestination();
+      }
+    }
+  }
+
+  private void Move()
+  {
+    Vector3 direction = destination.transform.position - transform.position;
+    direction.Normalize();
+    transform.position += direction * speed * Time.deltaTime;
+    this.transform.LookAt(destination.transform);
+  }
+
+  private bool HasArrivedDestination()
+  {
+    return (destination.transform.position - transform.position).magnitude <= arrivedThreshold;
+  }
+
+  private void OnArrivedToDestination()
+  {
+    Debug.Log(destination.name);
+       
+    if (dirIndex < directions.Count)
+    {
+      nextDirection = directions[dirIndex];
+      dirIndex++;
+
+      PickUpGarbage();
+      
+      Node nextNode = destination.GetNodeAtDirection(nextDirection);
+      if (nextNode)
+      {
+        transform.position = destination.transform.position;
+        transform.LookAt(nextNode.transform);
+        destination = destination.GetNodeAtDirection(nextDirection);
+      }
+      else
+      {
+        Crash();
+        outOfTrackDir = transform.forward;      
+      }
+    }
+    else
+    {
+      CheckFactory();
+      Level.Instance.OnRideEnd();
+      destination = null;
+      dirIndex = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    //action getfromlist
+  }
+
+  private void PickUpGarbage()
+  {
+    if (destination.hasGarbage)
     {
-        if(destination)
+      Garbage g = destination.GetGarbage();
+      if (g.garbageType == truckType)
+      {
+        destination.RemoveGarbage();
+        GarbagePickedUp = true;
+        SpriteInstancer.Instance.InstantiateAt(transform.position, true);
+      }
+    }
+  }
+
+  private void CheckFactory()
+  {
+    if (destination.isFactory)
+    {
+     
+      if (destination.type == truckType)
+      {
+
+        if (GarbagePickedUp)
         {
-            Move();
-        }
-        if(outOfTrack)
-        {
-            RotateOutOfControl();
-            timeRotating += Time.deltaTime;
-            if(timeRotating > maxTimeRotating)
-            {
-                Destroy(this.gameObject);
-            }
-        }
-    }
-
-    private void LateUpdate()
-    {
-        if(destination)
-        {
-            if (HasArrivedDestination())
-            {
-                OnArrivedToDestination();
-            }
-        }
-    }
-
-    private void Move()
-    {
-        Vector3 direction = destination.transform.position - transform.position;
-        direction.Normalize();
-        transform.position += direction * speed * Time.deltaTime;
-        this.transform.LookAt(destination.transform);
-    }
-
-    private bool HasArrivedDestination()
-    {
-        return (destination.transform.position - transform.position).magnitude <= arrivedThreshold;
-    }
-
-    private void OnArrivedToDestination()
-    {
-        if(dirIndex < directions.Count)
-        {
-            nextDirection = directions[dirIndex];
-            dirIndex++;
-
-            PickUpGarbage();
-            Node nextNode = destination.GetNodeAtDirection(nextDirection);
-            if(nextNode)
-            {
-                transform.position = destination.transform.position;
-                transform.LookAt(nextNode.transform);
-                destination = destination.GetNodeAtDirection(nextDirection);
-            }
-            else
-            {
-                outOfTrack = true;
-                destination = null;
-                outOfTrackDir = transform.forward;
-            }
+          SpriteInstancer.Instance.InstantiateAt(transform.position, true,true);
+          //Llamar para cambio de camion
+          Level.Instance.NextTruck();
         }
         else
         {
-            destination = null;
-            dirIndex = 0;
-        }
-
-        //action getfromlist
+          SpriteInstancer.Instance.InstantiateAt(transform.position, false);
+          ResetTransform();
+        }       
+      }
     }
+  }
 
-    private void PickUpGarbage()
+  private Node GetClosestNode()
+  {
+    Node[] nodes = FindObjectsOfType<Node>();
+    Node closestNode = nodes[0];
+    float minDistance = (transform.position - closestNode.transform.position).sqrMagnitude;
+
+    for (int i = 1; i < nodes.Length; i++)
     {
-        if(destination.hasGarbage)
-        {
-            Garbage g = destination.GetGarbage();
-            if(g.garbageType == truckType)
-                destination.RemoveGarbage();
-        }
+      float dist = (nodes[i].transform.position - transform.position).sqrMagnitude;
+      if (dist < minDistance)
+      {
+        minDistance = dist;
+        closestNode = nodes[i];
+      }
     }
 
-    private Node GetClosestNode()
+    return closestNode;
+  }
+
+  private void SetInitialDirection()
+  {
+    Directions dir = Directions.Right;
+    Vector3 front = Vector3.Cross(transform.up, transform.forward).normalized;
+    float minAngle = 359;
+    float angle;
+
+    angle = Mathf.Abs(Vector3.Angle(front, Vector3.forward));
+    if (angle < minAngle)
     {
-        Node[] nodes = FindObjectsOfType<Node>();
-        Node closestNode = nodes[0];
-        float minDistance = (transform.position - closestNode.transform.position).sqrMagnitude;
-
-        for (int i = 1; i < nodes.Length; i++)
-        {
-            float dist = (nodes[i].transform.position - transform.position).sqrMagnitude;
-            if (dist < minDistance)
-            {
-                minDistance = dist;
-                closestNode = nodes[i];
-            }
-        }
-
-        return closestNode;
+      minAngle = angle;
+      dir = Directions.Right;
     }
 
-    private void SetInitialDirection()
+    angle = Mathf.Abs(Vector3.Angle(front, Vector3.back));
+    if (angle < minAngle)
     {
-        Directions dir = Directions.Right;
-        Vector3 front = Vector3.Cross(transform.up, transform.forward).normalized;
-        float minAngle = 359;
-        float angle;
-
-        angle = Mathf.Abs(Vector3.Angle(front, Vector3.forward));
-        if (angle < minAngle)
-        {
-            minAngle = angle;
-            dir = Directions.Right;
-        }
-
-        angle = Mathf.Abs(Vector3.Angle(front, Vector3.back));
-        if (angle < minAngle)
-        {
-            minAngle = angle;
-            dir = Directions.Left;
-        }
-
-        angle = Mathf.Abs(Vector3.Angle(front, Vector3.left));
-        if (angle < minAngle)
-        {
-            minAngle = angle;
-            dir = Directions.Down;
-        }
-
-        angle = Mathf.Abs(Vector3.Angle(front, Vector3.right));
-        if (angle < minAngle)
-        {
-            minAngle = angle;
-            dir = Directions.Up;
-        }
-
-        currentDirection = dir;
-        nextDirection = dir;
+      minAngle = angle;
+      dir = Directions.Left;
     }
 
-    public void SetDirections(List<Directions> dirs)
+    angle = Mathf.Abs(Vector3.Angle(front, Vector3.left));
+    if (angle < minAngle)
     {
-        directions = dirs;
-        destination = startNode.GetNodeAtDirection(directions[dirIndex]);
-        dirIndex++;
+      minAngle = angle;
+      dir = Directions.Down;
     }
 
-    public void RotateOutOfControl()
+    angle = Mathf.Abs(Vector3.Angle(front, Vector3.right));
+    if (angle < minAngle)
     {
-        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
-        transform.position += outOfTrackDir * Time.deltaTime * speed;
+      minAngle = angle;
+      dir = Directions.Up;
     }
 
-    public void ResetTransform()
+    currentDirection = dir;
+    nextDirection = dir;
+  }
+
+  public void SetDirections(List<Directions> dirs)
+  {
+    Debug.Log(dirs.Count);
+
+    directions = dirs;
+    destination = startNode.GetNodeAtDirection(directions[dirIndex]);
+    if (destination == null)
     {
-        transform.position = initialTransform.position;
-        transform.rotation = initialTransform.rotation;
+      Crash();
     }
+
+    dirIndex++;
+  }
+
+
+  public void Crash()
+  {
+    outOfTrack = true;
+    SpriteInstancer.Instance.InstantiateAt(transform.position, false);
+    Level.Instance.OnRideEnd();
+  }
+
+  public void RotateOutOfControl()
+  {
+    transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+    transform.position += outOfTrackDir * Time.deltaTime * speed;
+  }
+
+  public void ResetTransform()
+  {
+    transform.position =  Level.Instance.firstNode.transform.position;
+    transform.rotation =  Quaternion.Euler(0,90,0);
+    dirIndex = 0;
+    outOfTrack = false;
+    GarbagePickedUp = false;
+  }
+
+
+
 }

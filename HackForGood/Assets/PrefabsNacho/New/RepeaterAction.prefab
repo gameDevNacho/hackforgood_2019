@@ -524,7 +524,7 @@ MonoBehaviour:
   moveActions: []
   repeatingText: {fileID: 8955969315327900321}
   icon: {fileID: 8324621815737271371}
-  maxMoveActions: 3
+  maxMoveActions: 2
 --- !u!1 &5728548216057830796
 GameObject:
   m_ObjectHideFlags: 0

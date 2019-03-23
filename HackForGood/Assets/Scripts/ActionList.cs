@@ -6,129 +6,132 @@ using UnityEngine.EventSystems;
 
 public class ActionList : Singleton<ActionList>, IPointerEnterHandler, IDropHandler, IPointerExitHandler
 {
-    [SerializeField]
-    public List<Action> actionList;
+  [SerializeField]
+  public List<Action> actionList;
 
-    private bool arranging;
+  private bool arranging;
 
-    private GameObject emptyGameObject;
+  private GameObject emptyGameObject;
 
-    [SerializeField]
-    private Transform canvasTransform;
+  [SerializeField]
+  private Transform canvasTransform;
 
-    private void Awake()
+  private void Awake()
+  {
+    actionList = new List<Action>();
+    arranging = false;
+    emptyGameObject = null;
+  }
+
+  private void Update()
+  {
+    if (arranging && transform.childCount > 0)
     {
-        actionList = new List<Action>();
-        arranging = false;
-        emptyGameObject = null;
-    }
-
-    private void Update()
-    {
-        if(arranging && transform.childCount > 0)
+      if (transform.GetChild(0).transform.position.y < Input.mousePosition.y)
+      {
+        if (emptyGameObject)
         {
-            if(transform.GetChild(0).transform.position.y < Input.mousePosition.y)
-            {
-                if (emptyGameObject)
-                {
-                    emptyGameObject.transform.SetSiblingIndex(0);
-                }
-            }
-
-            else if(transform.GetChild(transform.childCount - 1).transform.position.y > Input.mousePosition.y)
-            {
-                if (emptyGameObject)
-                {
-                    emptyGameObject.transform.SetSiblingIndex(transform.childCount - 1);
-                }
-            }
-
-            else
-            {
-                for (int i = 0; i < transform.childCount; i++)
-                {
-                    if (emptyGameObject && i + 1 < actionList.Count)
-                    {
-                        if (transform.GetChild(i).transform.position.y >= Input.mousePosition.y && transform.GetChild(i + 1).transform.position.y < Input.mousePosition.y)
-                        {
-                            emptyGameObject.transform.SetSiblingIndex(i + 1);
-                        }
-                    }
-                }
-            }
+          emptyGameObject.transform.SetSiblingIndex(0);
         }
-    }
+      }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if(eventData.dragging && eventData.pointerDrag.GetComponent<Action>() && !emptyGameObject)
+      else if (transform.GetChild(transform.childCount - 1).transform.position.y > Input.mousePosition.y)
+      {
+        if (emptyGameObject)
         {
-            arranging = true;
-            emptyGameObject = new GameObject();
-            emptyGameObject.transform.parent = transform;
-            emptyGameObject.AddComponent<Image>();
-            emptyGameObject.GetComponent<Image>().color = new Color(emptyGameObject.GetComponent<Image>().color.r, emptyGameObject.GetComponent<Image>().color.b, emptyGameObject.GetComponent<Image>().color.g, 0);
+          emptyGameObject.transform.SetSiblingIndex(transform.childCount - 1);
         }
-    }
+      }
 
-    public void OnDrop(PointerEventData eventData)
-    {
-        if(eventData.pointerDrag.GetComponent<Action>())
+      else
+      {
+        for (int i = 0; i < transform.childCount; i++)
         {
-            eventData.pointerDrag.transform.SetParent(transform);
-
-            if (emptyGameObject)
+          if (emptyGameObject && i + 1 < actionList.Count)
+          {
+            if (transform.GetChild(i).transform.position.y >= Input.mousePosition.y && transform.GetChild(i + 1).transform.position.y < Input.mousePosition.y)
             {
-                eventData.pointerDrag.transform.SetSiblingIndex(emptyGameObject.transform.GetSiblingIndex());
-                Destroy(emptyGameObject);
-                actionList.Insert(eventData.pointerDrag.transform.GetSiblingIndex(), eventData.pointerDrag.GetComponent<Action>());
-                eventData.pointerDrag.GetComponent<Action>().assigned = true;
-                eventData.pointerDrag.GetComponent<Action>().actionList = this;
+              emptyGameObject.transform.SetSiblingIndex(i + 1);
             }
+          }
         }
+      }
     }
+  }
 
-    public void OnPointerExit(PointerEventData eventData)
+  public void OnPointerEnter(PointerEventData eventData)
+  {
+    if (eventData.dragging && eventData.pointerDrag.GetComponent<Action>() && !emptyGameObject)
     {
-        if(eventData.dragging)
-        {
-            arranging = false;
-        }
-
-        if(emptyGameObject)
-        {
-            Destroy(emptyGameObject);
-        }
+      arranging = true;
+      emptyGameObject = new GameObject();
+      emptyGameObject.transform.parent = transform;
+      emptyGameObject.AddComponent<Image>();
+      emptyGameObject.GetComponent<Image>().color = new Color(emptyGameObject.GetComponent<Image>().color.r, emptyGameObject.GetComponent<Image>().color.b, emptyGameObject.GetComponent<Image>().color.g, 0);
     }
+  }
 
-    public void RemoveFromList(Action action)
+  public void OnDrop(PointerEventData eventData)
+  {
+    if (eventData.pointerDrag.GetComponent<Action>())
     {
-        actionList.Remove(action);
-        action.transform.parent = canvasTransform;
-    }
+      eventData.pointerDrag.transform.SetParent(transform);
 
-    public List<Directions> GetMoveDirections()
+      if (emptyGameObject)
+      {
+        eventData.pointerDrag.transform.SetSiblingIndex(emptyGameObject.transform.GetSiblingIndex());
+        Destroy(emptyGameObject);
+        actionList.Insert(eventData.pointerDrag.transform.GetSiblingIndex(), eventData.pointerDrag.GetComponent<Action>());
+        eventData.pointerDrag.GetComponent<Action>().assigned = true;
+        eventData.pointerDrag.GetComponent<Action>().actionList = this;
+      }
+    }
+  }
+
+  public void OnPointerExit(PointerEventData eventData)
+  {
+    if (eventData.dragging)
     {
-        List<Directions> moveActions = new List<Directions>();
-
-        for (int i = 0; i < actionList.Count; i++)
-        {
-            if(actionList[i].GetComponent<MoveAction>())
-            {
-                moveActions.Add(actionList[i].GetComponent<MoveAction>().GetDirection());
-            }
-
-            else if(actionList[i].GetComponent<RepeatAction>())
-            {
-                RepeatAction repeatAction = actionList[i].GetComponent<RepeatAction>();
-
-                for (int j = 0; j < repeatAction.GetMoveActions().Count; j++)
-                {
-                    moveActions.Add(repeatAction.GetMoveActions()[j].GetDirection());
-                }
-            }
-        }
-
-        return moveActions;
+      arranging = false;
     }
+
+    if (emptyGameObject)
+    {
+      Destroy(emptyGameObject);
+    }
+  }
+
+  public void RemoveFromList(Action action)
+  {
+    actionList.Remove(action);
+    action.transform.parent = canvasTransform;
+  }
+
+  public List<Directions> GetMoveDirections()
+  {
+    List<Directions> moveActions = new List<Directions>();
+
+    for (int i = 0; i < actionList.Count; i++)
+    {
+      if (actionList[i].GetComponent<MoveAction>())
+      {
+        moveActions.Add(actionList[i].GetComponent<MoveAction>().GetDirection());
+      }
+
+      else if (actionList[i].GetComponent<RepeatAction>())
+      {
+        RepeatAction repeatAction = actionList[i].GetComponent<RepeatAction>();
+        for (int k = 0; k < repeatAction.TimesRepeating; k++)
+        {
+          //moveActions.Add(repeatAction.GetMoveActions()[k].GetDirection());
+          for (int j = 0; j < repeatAction.GetMoveActions().Count; j++)
+          {
+            moveActions.Add(repeatAction.GetMoveActions()[j].GetDirection());
+          }
+        }
+      }
+    }
+
+    return moveActions;
+  }
 }
