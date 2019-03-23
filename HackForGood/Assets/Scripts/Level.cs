@@ -53,7 +53,11 @@ public class Level : MonoBehaviour
 
     public void OnVamonosAtomos()
     {
-        trucks[0].SetDirections(ActionList.Instance.GetMoveDirections());
+        if(trucks[0].directions.Count == 0)
+        {
+            trucks[0].SetDirections(ActionList.Instance.GetMoveDirections());
+        }
+        
         trucks[0].ResetTransform();
     }
 }

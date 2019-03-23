@@ -15,7 +15,8 @@ public class Truck : MonoBehaviour
     Directions currentDirection;
     Directions nextDirection;
 
-    List<Directions> directions;
+    [HideInInspector]
+    public List<Directions> directions;
     int dirIndex = 0;
 
     bool outOfTrack = false;
@@ -24,7 +25,8 @@ public class Truck : MonoBehaviour
     float timeRotating = 0;
     Vector3 outOfTrackDir;
 
-    Transform initialTransform;
+    Vector3 initialPos;
+    Quaternion initialRot;
 
     private static readonly float arrivedThreshold = 0.1f;
 
@@ -33,7 +35,8 @@ public class Truck : MonoBehaviour
     {
         //SetInitialDirection();
         startNode = GetClosestNode();
-        initialTransform = this.transform;
+        initialPos = this.transform.position;
+        initialRot = transform.rotation;
     }
 
     // Update is called once per frame
@@ -103,7 +106,7 @@ public class Truck : MonoBehaviour
         else
         {
             destination = null;
-            dirIndex = 0;
+            //dirIndex = 0;
         }
 
         //action getfromlist
@@ -192,7 +195,7 @@ public class Truck : MonoBehaviour
 
     public void ResetTransform()
     {
-        transform.position = initialTransform.position;
-        transform.rotation = initialTransform.rotation;
+        this.transform.position = initialPos;
+        this.transform.rotation = initialRot;
     }
 }
