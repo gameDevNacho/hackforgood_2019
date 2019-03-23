@@ -60,10 +60,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\InefficientDirAssignation.cs" />
     <Compile Include="Assets\Scripts\Action.cs" />
     <Compile Include="Assets\Scripts\ActionInstantiator.cs" />
     <Compile Include="Assets\Scripts\ActionList.cs" />
     <Compile Include="Assets\Scripts\Bezier.cs" />
+    <Compile Include="Assets\Scripts\CameraLimits.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\Garbage.cs" />
     <Compile Include="Assets\Scripts\Level.cs" />
@@ -71,7 +73,12 @@
     <Compile Include="Assets\Scripts\Node.cs" />
     <Compile Include="Assets\Scripts\Point3f.cs" />
     <Compile Include="Assets\Scripts\RepeatAction.cs" />
+    <Compile Include="Assets\Scripts\RepeatActionList.cs" />
     <Compile Include="Assets\Scripts\Rotation.cs" />
+    <Compile Include="Assets\Scripts\SliderHelper.cs" />
+    <Compile Include="Assets\Scripts\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\SpriteFunctionality.cs" />
+    <Compile Include="Assets\Scripts\SpriteInstancer.cs" />
     <Compile Include="Assets\Scripts\Truck.cs" />
     <None Include="Assets\Shaders\Vertex.shader" />
     <None Include="Assets\Shaders\CullOff.shader" />
