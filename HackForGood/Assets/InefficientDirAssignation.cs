@@ -39,8 +39,8 @@ public class InefficientDirAssignation : MonoBehaviour
                         {
                             node.SetNodeAt(n, Directions.Right);
                         }
-                        //EditorUtility.SetDirty(node);
-                        Undo.RecordObject(node, "NodeSetUp");
+                        EditorUtility.SetDirty(node);
+                        //Undo.RecordObject(node, "NodeSetUp");
                     }
                 }
             }
